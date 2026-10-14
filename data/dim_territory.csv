@@ -1,0 +1,19 @@
+territory_id,territory_name,state,region,rep,manager
+T01,Sydney CBD,NSW,NSW & ACT,Olivia Grant,Sarah Lim
+T02,North Shore,NSW,NSW & ACT,Daniel Wu,Sarah Lim
+T03,Parramatta,NSW,NSW & ACT,Priya Nair,Sarah Lim
+T04,Newcastle,NSW,NSW & ACT,Tom Hayes,Sarah Lim
+T05,Canberra,ACT,NSW & ACT,Grace Okafor,Sarah Lim
+T06,Melbourne North,VIC,VIC & TAS,Liam Murphy,James Patel
+T07,Melbourne South,VIC,VIC & TAS,Chloe Martin,James Patel
+T08,Geelong & West,VIC,VIC & TAS,Ben Russo,James Patel
+T09,Hobart,TAS,VIC & TAS,Hannah Lee,James Patel
+T10,Brisbane North,QLD,QLD,Jack Wilson,Mia Thompson
+T11,Brisbane South,QLD,QLD,Zara Ahmed,Mia Thompson
+T12,Gold Coast,QLD,QLD,Noah Clarke,Mia Thompson
+T13,Perth North,WA,WA & SA,Ella Fraser,Ravi Menon
+T14,Perth South,WA,WA & SA,Lucas Brown,Ravi Menon
+T15,Adelaide,SA,WA & SA,Isla Turner,Ravi Menon
+T16,Auckland Central,NZ,New Zealand,Mason Tane,Kiri Walker
+T17,Wellington,NZ,New Zealand,Ruby Chen,Kiri Walker
+T18,Christchurch,NZ,New Zealand,Finn O'Brien,Kiri Walker
