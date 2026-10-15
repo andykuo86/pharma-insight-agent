@@ -16,6 +16,23 @@ All data is synthetic. No real company, product, customer or sales data is used.
 
 *Click the image to view it full size.*
 
+## What the report looks like
+
+The standard report the assistant links back to, built as a hosted dashboard over the same
+synthetic data. Status is colour coded: on track, watch and off track.
+
+<p align="center">
+  <img src="docs/dashboard-sales.png" alt="The Sales tab of the performance report for all of ANZ in September 2026. Headline tiles show sales vs target, sales, market share and how many territory and brand pairs are off track. A table lists each territory and product, furthest behind target first, with colour-coded status." width="100%">
+</p>
+
+Clicking "Check this in the report" on an insight opens the dashboard on the right tab with
+the filters already set. This is Parramatta and Cardiora on the Coverage tab, with reach
+against target for each customer segment and the field days that explain it:
+
+<p align="center">
+  <img src="docs/dashboard-coverage.png" alt="The Coverage tab opened from an assistant link, filtered to Parramatta and Cardiora in September 2026. Reach is below target in all three customer segments, each shown as a red bar with a target tick, and a chart below shows field days dropping in the recent months." width="100%">
+</p>
+
 ## Design principles
 
 1. **The semantic layer owns the truth; the AI owns the interpretation.**
@@ -74,8 +91,26 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 export GEMINI_API_KEY="your-key"   # free key from Google AI Studio; the report works without any key
 streamlit run app.py               # opens http://localhost:8501
-pytest                             # 27 tests, no API key needed
+pytest                             # 30 tests, no API key needed
 ```
+
+### Linking to a hosted dashboard (optional)
+
+By default the assistant's "Check this in the report" links open the local Streamlit
+report in `views/report.py`. The same report can instead live as a hosted dashboard
+(this project's author built one as a Claude dashboard over the same synthetic data).
+To point the links at a dashboard, set its address before starting the app:
+
+```bash
+export REPORT_DASHBOARD_URL="https://your-dashboard-address"
+```
+
+The assistant then builds links such as
+`https://your-dashboard-address#coverage_t-T03_p-Cardiora_s-A_m-2026-09`: the tab, then
+the territory, product, segment and month, as one short name. A dashboard needs to read
+that name when it opens and apply the filters; see `semantic_layer.py` for the format.
+The dashboard's figures were checked against `semantic_layer.py` on every month, scope,
+brand and segment (25,200 values, no differences).
 
 ## Choosing the model
 

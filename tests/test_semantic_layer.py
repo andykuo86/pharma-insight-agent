@@ -51,3 +51,21 @@ def test_report_shows_the_same_numbers_as_the_semantic_layer():
     total = sl.sales_performance(sl.Filters(period=SEP, territory="T07", product="Cardiora"), by=()).iloc[0]
     assert shown["Sales vs target"] == f"{total.sales_vs_target_pct:.1f}%"
     assert shown["Market share"] == f"{total.market_share_pct:.1f}%"
+
+
+def test_dashboard_link_carries_the_tab_and_filters(monkeypatch):
+    monkeypatch.setenv("REPORT_DASHBOARD_URL", "https://example.com/dashboard")
+    f = sl.Filters(period="2026-09", territory="T03", product="Cardiora", segment="A")
+    assert sl.report_link(f, "coverage", source="assistant") == "https://example.com/dashboard#coverage_t-T03_p-Cardiora_s-A_m-2026-09"
+
+
+def test_dashboard_link_sends_a_region_as_an_id(monkeypatch):
+    monkeypatch.setenv("REPORT_DASHBOARD_URL", "https://example.com/dashboard/")
+    f = sl.Filters(period="2026-09", region="NSW & ACT")
+    assert sl.report_link(f, "sales") == "https://example.com/dashboard#sales_r-NSW-ACT_m-2026-09"
+
+
+def test_without_a_dashboard_the_local_report_is_used(monkeypatch):
+    monkeypatch.delenv("REPORT_DASHBOARD_URL", raising=False)
+    f = sl.Filters(period="2026-09", territory="T03")
+    assert sl.report_link(f, "sales").startswith(sl.REPORT_BASE_URL + "?")

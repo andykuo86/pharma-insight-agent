@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from dataclasses import asdict, dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -103,10 +104,29 @@ class Filters:
         return cls(**clean)
 
 
+def _dashboard_link(base: str, filters: Filters, view: str) -> str:
+    """Link into the hosted dashboard: <url>#<tab>_t-T03_p-Cardiora_s-A_m-2026-09.
+
+    The tab and the filters travel as one name made of letters, digits, hyphens and
+    underscores, which the dashboard reads when it opens. A region is sent as its id
+    (letters and digits, with hyphens), e.g. "NSW & ACT" becomes "NSW-ACT".
+    """
+    region = re.sub(r"[^A-Za-z0-9]+", "-", filters.region) if filters.region else None
+    values = [("r", region), ("t", filters.territory), ("p", filters.product), ("s", filters.segment), ("m", filters.period)]
+    return base.rstrip("/") + "#" + "_".join([view] + [f"{key}-{value}" for key, value in values if value])
+
+
 def report_link(filters: Filters, view: str = "sales", source: str | None = None) -> str:
-    """Link that opens the report with exactly these filters pre-selected."""
+    """Link that opens the report with exactly these filters pre-selected.
+
+    Opens the hosted dashboard when REPORT_DASHBOARD_URL is set, otherwise the local
+    Streamlit report.
+    """
     if view not in REPORT_VIEWS:
         raise ValueError(f"Unknown report view '{view}'")
+    dashboard = os.environ.get("REPORT_DASHBOARD_URL")
+    if dashboard:
+        return _dashboard_link(dashboard, filters, view)
     params = filters.to_params() | {"view": view}
     if source:
         params["from"] = source
