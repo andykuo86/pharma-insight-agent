@@ -8,6 +8,14 @@ themselves.
 
 All data is synthetic. No real company, product, customer or sales data is used.
 
+## The concept in one picture
+
+<p align="center">
+  <img src="docs/infographic.png" alt="Infographic. A sales manager asks an AI insight assistant for a monthly brief. The assistant reads governed metrics from a semantic layer, which also feeds the standard performance report. The assistant interprets and validates every number, then links the manager to the report with the same filters selected, so the manager can check the numbers." width="100%">
+</p>
+
+*Click the image to view it full size.*
+
 ## Design principles
 
 1. **The semantic layer owns the truth; the AI owns the interpretation.**
@@ -66,7 +74,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 export GEMINI_API_KEY="your-key"   # free key from Google AI Studio; the report works without any key
 streamlit run app.py               # opens http://localhost:8501
-pytest                             # 23 tests, no API key needed
+pytest                             # 27 tests, no API key needed
 ```
 
 ## Choosing the model
